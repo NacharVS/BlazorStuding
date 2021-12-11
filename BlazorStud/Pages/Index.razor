@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject IJSRuntime qq
 
 <div class="row">
     <div class="col text-center">
@@ -17,8 +18,17 @@
 
 @code{
     List<Game> games { get; set; }
+    LocalStorageService storage;
+
     protected override void OnInitialized()
     {
-        games = Game.SimpleList();
+        storage = new LocalStorageService(qq);
     }
+
+    public void LocalStorageActive()
+    {
+        
+    }
+
+
 }
