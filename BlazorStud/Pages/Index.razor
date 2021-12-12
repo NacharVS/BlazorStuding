@@ -7,6 +7,10 @@
     </div>
 </div>
 
+<button class="btn btn-primary" @onclick="LocalStorageSave">save</button>
+<button class="btn btn-primary" @onclick="LocalStorageLoad">load</button>
+
+
 <div class="row">
     <div class="col text-center">
         <h2>show all games</h2>
@@ -17,6 +21,8 @@
 @*<SingleGame Game="games[0]" />*@
 
 @code{
+    public int Number { get; set; }
+    public string str1 { get; set; }
     List<Game> games { get; set; }
     LocalStorageService storage;
 
@@ -25,9 +31,16 @@
         storage = new LocalStorageService(qq);
     }
 
-    public void LocalStorageActive()
+    public async void LocalStorageSave()
     {
-        
+        await storage.SetStringAsync("number", "200");
+    }
+
+    public async void LocalStorageLoad()
+    {
+        str1 = await storage.GetStringAsync("number");
+
+
     }
 
 
