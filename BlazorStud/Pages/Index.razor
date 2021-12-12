@@ -39,7 +39,7 @@
     public async void LocalStorageLoad()
     {
         str1 = await storage.GetStringAsync("number");
-
+        StateHasChanged();
 
     }
 
