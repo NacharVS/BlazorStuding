@@ -3,8 +3,8 @@
 @using System.IO
 @using Microsoft.AspNetCore.Hosting
 @using Microsoft.Extensions.Logging
-@inject ILogger<FileUpload1> Logger
 @inject IWebHostEnvironment Environment
+@inject IJSRuntime qqq
 
 <h3>Upload Files</h3>
 
@@ -55,6 +55,7 @@ else
     private long maxFileSize = 1024 * 15;
     private int maxAllowedFiles = 3;
     private bool isLoading;
+    protected byte[] img;
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
@@ -68,17 +69,14 @@ else
                 loadedFiles.Add(file);
 
                 var trustedFileNameForFileStorage = Path.GetRandomFileName();
-                var path = Path.Combine(Environment.ContentRootPath,
-                        Environment.EnvironmentName, "unsafe_uploads",
-                        trustedFileNameForFileStorage);
-
-                await using FileStream fs = new(path, FileMode.Create);
-                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                var stream = file.OpenReadStream(maxFileSize);
+                img = new byte[stream.Length];
+                await stream.ReadAsync(img);
             }
+
             catch (Exception ex)
             {
-                Logger.LogError("File: {Filename} Error: {Error}",
-                    file.Name, ex.Message);
+                await qqq.InvokeVoidAsync("logError", ex);
             }
         }
 
