@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,14 @@ namespace BlazorStud.Models
         public string Genre { get; set; }
         public DateTime ReleaseDate { get; set; }
 
+        public static async void UpdateOne()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("qqq");
+            var collection = database.GetCollection<Game>("rrr");
+            await collection.UpdateOneAsync(x => x.Name == "qq", Builders<Game>.Update.Set(x=>x.Genre, "RTS"));
+
+        }
         public static List<Game> SimpleList()
         {
             return new List<Game>()

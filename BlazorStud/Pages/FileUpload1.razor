@@ -68,10 +68,12 @@ else
             {
                 loadedFiles.Add(file);
 
-                var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                //var trustedFileNameForFileStorage = Path.GetRandomFileName();
                 var stream = file.OpenReadStream(maxFileSize);
                 img = new byte[stream.Length];
                 await stream.ReadAsync(img);
+               
+
             }
 
             catch (Exception ex)
