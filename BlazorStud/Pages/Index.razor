@@ -1,13 +1,13 @@
 ﻿@page "/"
 @inject IJSRuntime qq
-
+@inject NavigationManager ss
 <div class="row">
     <div class="col text-center">
         <h1>Welcome!</h1>
     </div>
 </div>
 
-<button class="btn btn-primary" @onclick="LocalStorageSave">save</button>
+<button class="btn btn-primary" @onclick="ToMain">save</button>
 <button class="btn btn-primary" @onclick="LocalStorageLoad">load</button>
 
 
@@ -26,6 +26,11 @@
     List<Game> games { get; set; }
     LocalStorageService storage;
 
+    protected void ToMain()
+    {
+        ss.NavigateTo("/counter");
+    }
+
     protected override void OnInitialized()
     {
         storage = new LocalStorageService(qq);
@@ -40,6 +45,7 @@
     {
         str1 = await storage.GetStringAsync("number");
         StateHasChanged();
+
 
     }
 
